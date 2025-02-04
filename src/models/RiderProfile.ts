@@ -1,5 +1,6 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
-import { BaseModel, type VehicleType } from './BaseModel';
+import { BaseModel } from './BaseModel';
+import { type VehicleType } from './types';
 import { User } from './User';
 
 @Entity('rider_profiles')

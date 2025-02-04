@@ -1,5 +1,3 @@
-import { userRoutes } from './user';
+import router from './router';
 
-export const routes = {
-  '/users': userRoutes,
-};
+export default router;

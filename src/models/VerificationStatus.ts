@@ -1,9 +1,8 @@
-// verification-status.model.ts
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { BaseModel } from './BaseModel';
 import type { VerificationStatus as VerificationStatusType, UserType } from './types';
 import { User } from './User';
-import { Document } from './document.model';
+import { Document } from './Document';
 
 @Entity('verification_statuses')
 export class VerificationStatus extends BaseModel {
