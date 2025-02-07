@@ -14,10 +14,12 @@ export interface BunRequest extends Request {
 class Router {
   private routes: Route[] = [];
 
+  // Register a new route
   add(method: string, path: string, handler: Handler) {
     this.routes.push({ method: method.toUpperCase(), path, handler });
   }
 
+  // Match incoming request with registered routes
   match(req: Request) {
     const url = new URL(req.url);
     const method = req.method.toUpperCase();
@@ -43,9 +45,10 @@ class Router {
       }
 
       if (match) {
-        const extendedRequest: BunRequest = Object.create(req, {
-          params: { value: params, enumerable: true },
-          query: { value: url.searchParams, enumerable: true }
+        // Extend the Request object with `params` and `query`
+        const extendedRequest: BunRequest = Object.assign(req, {
+          params,
+          query: url.searchParams,
         });
 
         return route.handler(extendedRequest);
@@ -56,6 +59,7 @@ class Router {
   }
 }
 
+// Initialize Router
 const router = new Router();
 
 export default router;
