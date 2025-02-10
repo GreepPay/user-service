@@ -1,5 +1,11 @@
 import { DataSource } from 'typeorm';
-import { UserSchema } from './models/schemas/UserProfileSchema';
+import { 
+  UserProfileSchema,
+  BusinessSchema,
+  RiderSchema,
+  CustomerSchema,
+  VerificationSchema
+} from './models/schemas';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -10,7 +16,13 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: true,
-  entities: [ UserSchema ],
+  entities: [
+    UserProfileSchema,
+    BusinessSchema,
+    RiderSchema,
+    CustomerSchema,
+    VerificationSchema
+  ],
   subscribers: [],
   migrations: ['src/database/migrations/*.ts'],
 });
