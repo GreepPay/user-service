@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { UserSchema } from './models/schemas/user';
+import { UserSchema } from './models/schemas/UserProfileSchema';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
