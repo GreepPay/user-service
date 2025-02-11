@@ -7,12 +7,12 @@ export class CreateRiders20240210000003 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: "riders",
             columns: [
-                { name: "id", type: "uuid", isPrimary: true, default: "uuid_generate_v4()" },
-                { name: "user_profile_id", type: "uuid", isUnique: true },
+                { name: 'id', type: 'int', isPrimary: true, isGenerated: true, generationStrategy: 'increment' },
+                { name: "auth_user_id", type: "varchar", isUnique: true },
                 { name: "location", type: "varchar", isNullable: true },
-                { name: "license", type: "varchar", isNullable: false },
-                { name: "vehicle_type", type: "varchar", isNullable: false },
-                { name: "vehicle_registration_number", type: "varchar", isNullable: false },
+                { name: "license", type: "varchar", isNullable: true },
+                { name: "vehicle_type", type: "varchar", isNullable: true },
+                { name: "vehicle_registration_number", type: "varchar", isNullable: true },
                 { name: "vehicle_insurance", type: "varchar", isNullable: true },
                 { name: "experience_years", type: "varchar", isNullable: true },
                 { name: "availability_status", type: "varchar", isNullable: false, default: "true" },
@@ -23,8 +23,8 @@ export class CreateRiders20240210000003 implements MigrationInterface {
         }));
 
         await queryRunner.createForeignKey("riders", new TableForeignKey({
-            columnNames: ["user_profile_id"],
-            referencedColumnNames: ["id"],
+            columnNames: ["auth_user_id"],
+            referencedColumnNames: ["auth_user_id"],
             referencedTableName: "user_profiles",
             onDelete: "CASCADE"
         }));

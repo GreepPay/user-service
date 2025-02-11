@@ -1,5 +1,4 @@
 import jwt, { type SignOptions, type Secret } from 'jsonwebtoken';
-import { User } from '../models/User';
 
 
 export class JwtService {
@@ -13,23 +12,6 @@ export class JwtService {
     this.request = request;
   }
 
-  /**
-   * Generates a JWT token for a given user
-   * @param user - The user object to include in the token
-   * @returns string JWT token
-   */
-  generateToken(user: User): string {
-    const options: SignOptions = { expiresIn: this.expiresIn as jwt.SignOptions['expiresIn'] };
-    return jwt.sign(
-      {
-        id: user.uuid,
-        email: user.email,
-        role: user.role?.name
-      },
-      this.secretKey as Secret,
-      options
-    );
-  }
 
   /**
    * Verifies a JWT token

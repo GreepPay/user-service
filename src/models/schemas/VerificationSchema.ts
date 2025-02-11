@@ -6,12 +6,13 @@ export const VerificationSchema = new EntitySchema<VerificationEntity>({
   name: 'Verification',
   columns: {
     id: {
-      type: String,
+      type: 'int',
       primary: true,
-      generated: 'uuid'
+      generated: 'increment'
     },
-    user_profile_id: {
-      type: String
+    auth_user_id: {
+      type: String,
+      unique: true
     },
     user_type: {
       type: 'enum',
@@ -46,7 +47,7 @@ export const VerificationSchema = new EntitySchema<VerificationEntity>({
     user_profile: {
       type: 'many-to-one',
       target: 'UserProfile',
-      joinColumn: { name: 'user_profile_id' },
+      joinColumn: { name: 'auth_user_id' },
       onDelete: 'CASCADE'
     }
   }

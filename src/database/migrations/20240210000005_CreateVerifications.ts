@@ -7,8 +7,8 @@ export class CreateVerifications20240210000005 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: "verifications",
             columns: [
-                { name: "id", type: "uuid", isPrimary: true, default: "uuid_generate_v4()" },
-                { name: "user_profile_id", type: "uuid", isNullable: false },
+                { name: 'id', type: 'int', isPrimary: true, isGenerated: true, generationStrategy: 'increment' },
+                { name: "auth_user_id", type: "varchar", isUnique: true },
                 { name: "user_type", type: "enum", enum: ["Business", "Rider", "Customer"], isNullable: false },
                 { name: "document_type", type: "enum", enum: ["International Passport", "Resident Permit", "Driver’s License", "Student ID", "Passport"], isNullable: false },
                 { name: "document_url", type: "varchar", isNullable: false },
@@ -19,9 +19,9 @@ export class CreateVerifications20240210000005 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
-                    columnNames: ["user_profile_id"],
+                    columnNames: ["auth_user_id"],
                     referencedTableName: "user_profiles",
-                    referencedColumnNames: ["id"],
+                    referencedColumnNames: ["auth_user_id"],
                     onDelete: "CASCADE"
                 }
             ]
@@ -29,6 +29,6 @@ export class CreateVerifications20240210000005 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("verification_requests");
+        await queryRunner.dropTable("verifications");
     }
 }

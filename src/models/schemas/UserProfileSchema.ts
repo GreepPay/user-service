@@ -5,12 +5,8 @@ import { type UserProfileEntity } from '../../forms/userProfile';
 export const UserProfileSchema = new EntitySchema<UserProfileEntity>({
   name: 'UserProfile',
   columns: {
-    id: {
-      type: String,
-      primary: true,
-      generated: 'uuid'
-    },
     auth_user_id: {
+      primary: true,
       type: String,
       unique: true
     },

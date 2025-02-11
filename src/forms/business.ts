@@ -2,7 +2,7 @@ import { type UserProfileEntity } from './userProfile';
 
 export interface BusinessEntity {
     id: string;
-    user_profile_id: string;
+    auth_user_id: string;
     logo?: string;
     location?: string;
     banner?: string;

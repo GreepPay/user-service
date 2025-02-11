@@ -2,7 +2,7 @@ import { type UserProfileEntity } from './userProfile';
 
 export interface VerificationEntity {
     id: string;
-    user_profile_id: string;
+    auth_user_id: string;
     user_type: 'Business' | 'Rider' | 'Customer';
     document_type: 'International Passport' | 'Resident Permit' | "Driver's License" | 'Student ID' | 'Passport';
     document_url: string;

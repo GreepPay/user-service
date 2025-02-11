@@ -6,11 +6,11 @@ export const BusinessSchema = new EntitySchema<BusinessEntity>({
   name: 'Business',
   columns: {
     id: {
-      type: String,
+      type: 'int',
       primary: true,
-      generated: 'uuid'
+      generated: 'increment'
     },
-    user_profile_id: {
+    auth_user_id: {
       type: String,
       unique: true
     },
@@ -59,7 +59,7 @@ export const BusinessSchema = new EntitySchema<BusinessEntity>({
     user_profile: {
       type: 'one-to-one',
       target: 'UserProfile',
-      joinColumn: { name: 'user_profile_id' },
+      joinColumn: { name: 'auth_user_id' },
       onDelete: 'CASCADE'
     }
   }

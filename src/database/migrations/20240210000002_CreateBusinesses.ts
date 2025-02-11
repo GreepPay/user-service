@@ -7,8 +7,8 @@ export class CreateBusinesses20240210000002 implements MigrationInterface {
         await queryRunner.createTable(new Table({
             name: "businesses",
             columns: [
-                { name: "id", type: "uuid", isPrimary: true, default: "uuid_generate_v4()" },
-                { name: "user_profile_id", type: "uuid", isUnique: true },
+                { name: 'id', type: 'int', isPrimary: true, isGenerated: true, generationStrategy: 'increment' },
+                { name: "auth_user_id", type: "varchar", isUnique: true },
                 { name: "logo", type: "varchar", isNullable: true },
                 { name: "location", type: "varchar", isNullable: true },
                 { name: "banner", type: "varchar", isNullable: true },
@@ -23,8 +23,8 @@ export class CreateBusinesses20240210000002 implements MigrationInterface {
         }));
 
         await queryRunner.createForeignKey("businesses", new TableForeignKey({
-            columnNames: ["user_profile_id"],
-            referencedColumnNames: ["id"],
+            columnNames: ["auth_user_id"],
+            referencedColumnNames: ["auth_user_id"],
             referencedTableName: "user_profiles",
             onDelete: "CASCADE"
         }));

@@ -1,4 +1,4 @@
 import router from './router';
-import './user';
+import './userProfile';
 
 export default router;

@@ -2,7 +2,7 @@ import { type UserProfileEntity } from './userProfile';
  
  export interface RiderEntity {
     id: string;
-    user_profile_id: string;
+    auth_user_id: string;
     location?: string;
     license: string;
     vehicle_type: string;

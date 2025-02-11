@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import dotenv from 'dotenv';
 import { 
   UserProfileSchema,
   BusinessSchema,
@@ -6,6 +7,8 @@ import {
   CustomerSchema,
   VerificationSchema
 } from './models/schemas';
+
+dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
