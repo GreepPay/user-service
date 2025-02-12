@@ -91,4 +91,46 @@ router.add('POST', `/${APP_VERSION}/verification`, async (request: BunRequest) =
   });
 });
 
+/**
+ * @swagger
+ * /v1/verification/approve:
+ *   post:
+ *     tags:
+ *       - Verification
+ *     summary: Approve or reject a verification request
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - verificationId
+ *               - status
+ *             properties:
+ *               verificationId:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *                 enum: [Approved, Rejected]
+ *     responses:
+ *       200:
+ *         description: Verification status updated successfully
+ *       400:
+ *         description: Invalid request
+ *       401:
+ *         description: Unauthorized - Token missing or invalid
+ *       404:
+ *         description: Verification request not found
+ */
+router.add('POST', `/${APP_VERSION}/verification/approve`, async (request: BunRequest) => {
+  const result = await verificationController.approveVerification(request);
+  return new Response(JSON.stringify(result.body), {
+    headers: { 'Content-Type': 'application/json' },
+    status: result.statusCode
+  });
+});
+
 export default router;

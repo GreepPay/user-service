@@ -5,4 +5,8 @@ export class VerificationController {
   async create(request: BunRequest) {
     return new VerificationService().createVerification(request);
   }
+
+  async approveVerification(request: BunRequest) {
+    return new VerificationService().approveVerification(request);
+  }
 }

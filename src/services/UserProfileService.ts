@@ -16,6 +16,8 @@ export class UserProfileService extends BaseService<UserProfileEntity> {
   async createProfile(request: BunRequest) {
     try {
       const authUserId = new JwtService(request).getCurrentUserId();
+      if (!authUserId) return HttpResponse.failure("Unauthorized", 401);
+      
       const { user_type, profile_picture, profileData } = (await request.json()) as {
         user_type: UserProfileEntity["user_type"];
         profile_picture: string;
@@ -70,6 +72,7 @@ export class UserProfileService extends BaseService<UserProfileEntity> {
   async updateProfile(request: BunRequest) {
     try {
       const authUserId = new JwtService(request).getCurrentUserId();
+      if (!authUserId) return HttpResponse.failure("Unauthorized", 401);
       const { user_type, profile_picture, profileData } = (await request.json()) as {
         user_type: UserProfileEntity["user_type"];
         profile_picture?: string;
@@ -119,6 +122,8 @@ export class UserProfileService extends BaseService<UserProfileEntity> {
   async deleteProfile(request: BunRequest) {
     try {
       const authUserId = new JwtService(request).getCurrentUserId();
+      if (!authUserId) return HttpResponse.failure("Unauthorized", 401);
+
       const existingProfile = await this.findByField("auth_user_id", authUserId);
       if (!existingProfile) {
         return HttpResponse.failure("User profile not found", 404);

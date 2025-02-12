@@ -55,4 +55,41 @@ export class VerificationService extends BaseService<VerificationEntity> {
       return HttpResponse.failure("Failed to create verification", 500);
     }
   }
+
+  async approveVerification(request: BunRequest) {
+    try {
+      // Extract admin user ID from JWT
+      const adminUserId = new JwtService(request).getCurrentUserId();
+      if (!adminUserId) return HttpResponse.failure("Unauthorized", 401);
+  
+      // Extract request data
+      const { verificationId, status } = (await request.json()) as {
+        verificationId: string;
+        status: "Approved" | "Rejected";
+      };
+  
+      if (!["Approved", "Rejected"].includes(status)) {
+        return HttpResponse.failure("Invalid status value", 400);
+      }
+  
+      // Check if verification request exists
+      const verification = await this.findById(verificationId);
+      if (!verification) {
+        return HttpResponse.failure("Verification request not found", 404);
+      }
+  
+      // Update verification request status
+      await this.update(verificationId, { status });
+  
+      // Update user profile verification_status
+      await this.userProfileService.update(verification.auth_user_id, {
+        verification_status: status,
+      });
+  
+      return HttpResponse.success(`Verification ${status.toLowerCase()} successfully`);
+    } catch (error) {
+      console.error("Error approving verification:", error);
+      return HttpResponse.failure("Failed to approve verification", 500);
+    }
+  }  
 }
