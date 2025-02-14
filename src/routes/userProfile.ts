@@ -7,11 +7,6 @@ const APP_VERSION = 'v1';
 /**
  * @swagger
  * components:
- *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
  *   schemas:
  *     UserProfile:
  *       type: object
@@ -96,8 +91,6 @@ const APP_VERSION = 'v1';
  *     tags:
  *       - Profiles
  *     summary: Create user profile
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,14 +115,8 @@ const APP_VERSION = 'v1';
  *     responses:
  *       201:
  *         description: Profile created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UserProfile'
  *       400:
  *         description: Invalid input
- *       401:
- *         description: Unauthorized - Token missing or invalid
  */
 router.add('POST', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
   const result = await userProfileController.create(request);
@@ -146,8 +133,6 @@ router.add('POST', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
  *     tags:
  *       - Profiles
  *     summary: Update user profile
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -172,8 +157,6 @@ router.add('POST', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
  *         description: Profile updated successfully
  *       400:
  *         description: Invalid input
- *       401:
- *         description: Unauthorized - Token missing or invalid
  *       404:
  *         description: Profile not found
  */
@@ -185,7 +168,6 @@ router.add('PUT', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
   });
 });
 
-
 /**
  * @swagger
  * /v1/profiles:
@@ -193,22 +175,29 @@ router.add('PUT', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
  *     tags:
  *       - Profiles
  *     summary: Delete user's profile
- *     security:
- *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - auth_user_id
+ *             properties:
+ *               auth_user_id:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Profile deleted successfully
- *       401:
- *         description: Unauthorized - Token missing or invalid
+ *       400:
+ *         description: auth_user_id is required
  *       404:
  *         description: Profile not found
  *       500:
  *         description: Internal server error
  */
-
 router.add('DELETE', `/${APP_VERSION}/profiles`, async (request: BunRequest) => {
   const result = await userProfileController.delete(request);
-
   return new Response(JSON.stringify(result.body), {
     headers: { "Content-Type": "application/json" },
     status: result.statusCode,

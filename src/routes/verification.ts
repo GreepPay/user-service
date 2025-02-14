@@ -49,8 +49,6 @@ const APP_VERSION = 'v1';
  *     tags:
  *       - Verification
  *     summary: Submit a verification request
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -58,10 +56,13 @@ const APP_VERSION = 'v1';
  *           schema:
  *             type: object
  *             required:
+ *               - auth_user_id
  *               - user_type
  *               - document_type
  *               - document_url
  *             properties:
+ *               auth_user_id:
+ *                 type: string
  *               user_type:
  *                 type: string
  *                 enum: [Business, Rider, Customer]
@@ -78,8 +79,6 @@ const APP_VERSION = 'v1';
  *         description: Verification request submitted successfully
  *       400:
  *         description: Invalid input
- *       401:
- *         description: Unauthorized - Token missing or invalid
  *       409:
  *         description: Verification request already exists
  */
@@ -98,8 +97,6 @@ router.add('POST', `/${APP_VERSION}/verification`, async (request: BunRequest) =
  *     tags:
  *       - Verification
  *     summary: Approve or reject a verification request
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -109,19 +106,20 @@ router.add('POST', `/${APP_VERSION}/verification`, async (request: BunRequest) =
  *             required:
  *               - verificationId
  *               - status
+ *               - auth_user_id
  *             properties:
  *               verificationId:
  *                 type: string
  *               status:
  *                 type: string
  *                 enum: [Approved, Rejected]
+ *               auth_user_id:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Verification status updated successfully
  *       400:
  *         description: Invalid request
- *       401:
- *         description: Unauthorized - Token missing or invalid
  *       404:
  *         description: Verification request not found
  */
