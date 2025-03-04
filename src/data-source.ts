@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
+import fs from "fs";
 import { 
   UserProfileSchema,
   BusinessSchema,
@@ -19,6 +20,15 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: true,
+  ssl:
+  process.env.DB_USE_SSL === "true"
+    ? {
+        rejectUnauthorized: true,
+        ca: fs
+          .readFileSync(__dirname + "/database/ca-certificate.crt")
+          .toString(),
+      }
+    : false,
   entities: [
     UserProfileSchema,
     BusinessSchema,
