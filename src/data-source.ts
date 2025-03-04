@@ -1,5 +1,14 @@
 import { DataSource } from 'typeorm';
-import { User } from './models/User';
+import dotenv from 'dotenv';
+import { 
+  UserProfileSchema,
+  BusinessSchema,
+  RiderSchema,
+  CustomerSchema,
+  VerificationSchema
+} from './models/schemas';
+
+dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -10,7 +19,13 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [
+    UserProfileSchema,
+    BusinessSchema,
+    RiderSchema,
+    CustomerSchema,
+    VerificationSchema
+  ],
   subscribers: [],
-  migrations: [],
-}); 
+  migrations: ['src/database/migrations/*.ts'],
+});
