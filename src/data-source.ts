@@ -1,13 +1,13 @@
 import { DataSource } from 'typeorm';
 import dotenv from 'dotenv';
 import fs from "fs";
-// import { 
-//   UserProfileSchema,
-//   BusinessSchema,
-//   RiderSchema,
-//   CustomerSchema,
-//   VerificationSchema
-// } from './models/schemas';
+import { 
+  UserProfileSchema,
+  BusinessSchema,
+  RiderSchema,
+  CustomerSchema,
+  VerificationSchema
+} from './models/schemas';
 
 dotenv.config();
 
@@ -30,11 +30,11 @@ export const AppDataSource = new DataSource({
       }
     : false,
   entities: [
-    // UserProfileSchema,
-    // BusinessSchema,
-    // RiderSchema,
-    // CustomerSchema,
-    // VerificationSchema
+    UserProfileSchema,
+    BusinessSchema,
+    RiderSchema,
+    CustomerSchema,
+    VerificationSchema
   ],
   subscribers: [],
   migrations: ['src/database/migrations/*.ts'],
